@@ -1,0 +1,10 @@
+{
+  "name": "jl-soon-worship",
+  "version": "1.0.0",
+  "private": true,
+  "description": "찬양 가사, 성경 본문, 해설, 광고를 보여주는 순예배 진행 웹앱",
+  "scripts": {
+    "config": "node scripts/build-config.js",
+    "dev": "node scripts/build-config.js && python3 -m http.server 8000 --directory public"
+  }
+}
