@@ -1,4 +1,4 @@
--- 순예배 웹앱 — Supabase schema
+-- Neat Soon — Supabase schema
 -- Run this whole file once in Supabase Dashboard → SQL Editor.
 
 -- ───────────────────────────────────────────────────────────

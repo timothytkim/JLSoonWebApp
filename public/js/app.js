@@ -168,7 +168,7 @@ function renderShell({ services, service = null, content = null, active = null, 
 
   const sidebar = h('aside', { class: 'sidebar' },
     h('div', { class: 'sidebar__top' },
-      h('a', { class: 'brand', href: '#/' }, '순예배'),
+      h('a', { class: 'brand', href: '#/' }, 'Neat Soon'),
       renderAuthControl()),
     service ? h('a', { class: 'current', href: '#/services' },
       h('span', { class: 'current__text' },

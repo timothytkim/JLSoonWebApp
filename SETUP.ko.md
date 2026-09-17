@@ -1,6 +1,6 @@
-# 순예배 웹앱 설치 가이드 (Supabase + Netlify)
+# Neat Soon 설치 가이드 (Supabase + Netlify)
 
-이 문서는 순예배 웹앱을 처음부터 인터넷에 올리는 방법을 순서대로 설명합니다.
+이 문서는 Neat Soon 웹앱을 처음부터 인터넷에 올리는 방법을 순서대로 설명합니다.
 코딩을 잘 몰라도 따라 할 수 있도록 화면에서 누를 메뉴 이름을 그대로 적었습니다.
 
 - **Supabase**: 예배 내용(찬양, 성경, 해설, 광고)과 이미지, 로그인 계정을 저장하는 곳
@@ -26,7 +26,7 @@
 
 1. [supabase.com](https://supabase.com)에 로그인한 뒤 **New project**를 누릅니다.
 2. 다음을 입력합니다.
-   - **Name**: 예) `soon-worship`
+   - **Name**: 예) `neat-soon`
    - **Database Password**: 강력한 비밀번호 (따로 적어 두세요. 앱에는 쓰지 않습니다)
    - **Region**: `Northeast Asia (Seoul)` 추천
 3. **Create new project**를 누르고, 준비될 때까지 1~2분 기다립니다.
@@ -145,7 +145,7 @@ from public.editors e join auth.users u on u.id = e.user_id;
 
 1. **Deploy**를 누릅니다.
 2. 1분 정도 지나 **Published**가 뜨면 `https://어떤이름.netlify.app` 주소가 생깁니다.
-3. 주소를 바꾸려면 **Site configuration** → **Change site name**에서 바꿉니다. (예: `jl-soon.netlify.app`)
+3. 주소를 바꾸려면 **Site configuration** → **Change site name**에서 바꿉니다. (예: `neat-soon.netlify.app`)
 
 > ⚠️ **환경 변수를 나중에 넣거나 바꿨다면** 반드시 **Deploys** → **Trigger deploy** → **Deploy site**로 다시 배포해야 반영됩니다.
 
@@ -154,7 +154,7 @@ from public.editors e join auth.users u on u.id = e.user_id;
 ## 7단계. Supabase에 사이트 주소 알려 주기 (선택)
 
 1. Supabase **Authentication** → **URL Configuration**
-2. **Site URL**에 Netlify 주소(예: `https://jl-soon.netlify.app`)를 넣고 저장합니다.
+2. **Site URL**에 Netlify 주소(예: `https://neat-soon.netlify.app`)를 넣고 저장합니다.
 
 ---
 

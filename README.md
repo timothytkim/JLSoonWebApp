@@ -1,8 +1,8 @@
-# 순예배 웹앱 (JLSoonWebApp)
+# Neat Soon
 
-찬양 가사, 성경 본문, 해설, 광고를 보여주는 순예배 진행 웹앱.
+**Neat Soon**은 찬양 가사, 성경 본문, 해설, 광고를 보여주는 순예배 진행 웹앱입니다.
 
-A simple worship-service web app for small groups: praise lyrics, Bible passages, commentary and announcements, with a large-type presentation mode. Built with plain HTML, CSS and vanilla JavaScript, hosted on **Netlify**, with data in **Supabase**.
+Neat Soon is a simple worship-service web app for small groups: praise lyrics, Bible passages, commentary and announcements, with a large-type presentation mode. Built with plain HTML, CSS and vanilla JavaScript, hosted on **Netlify**, with data in **Supabase**.
 
 > 🇰🇷 Supabase + Netlify 설치 방법(한국어): [SETUP.ko.md](SETUP.ko.md)
 
