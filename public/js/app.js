@@ -6,6 +6,7 @@ import { renderForm } from './form.js';
 import { renderSection } from './section-view.js';
 import { renderPresent } from './present.js';
 import { renderCalendar } from './calendar.js';
+import { icon } from './icons.js';
 
 const app = document.getElementById('app');
 const cache = { services: null, content: new Map() };
@@ -156,12 +157,12 @@ window.addEventListener('hashchange', () => {
 // ───────────────────────────────────────────── Layout
 
 function renderShell({ services, service = null, content = null, active = null, main }) {
-  const navLink = (key, emoji, label, href, count) => h('a', {
+  const navLink = (key, iconName, label, href, count) => h('a', {
     href,
     class: `nav__link${active === key ? ' is-active' : ''}`,
     'aria-current': active === key ? 'page' : null,
   },
-  h('span', { class: 'nav__emoji', 'aria-hidden': 'true' }, emoji),
+  icon(iconName, 'icon nav__icon'),
   h('span', { class: 'nav__label' }, label),
   count != null ? h('span', { class: 'nav__count' }, count) : null);
 
@@ -175,13 +176,13 @@ function renderShell({ services, service = null, content = null, active = null, 
         h('span', { class: 'current__title' }, service.title)),
       h('span', { class: 'current__change' }, '변경 ›')) : null,
     h('nav', { class: 'nav', 'aria-label': '메뉴' },
-      navLink('services', '📅', [h('span', { class: 'nav__label-extra' }, '전체 '), '일정'], '#/services'),
+      navLink('services', 'calendar', [h('span', { class: 'nav__label-extra' }, '전체 '), '일정'], '#/services'),
       service ? [
         h('div', { class: 'nav__divider', 'aria-hidden': 'true' }),
-        navLink('overview', '🏠', '개요', `#/s/${service.id}`),
-        SECTION_ORDER.map((key) => navLink(key, SECTIONS[key].emoji, SECTIONS[key].label, `#/s/${service.id}/${key}`, content[key].length)),
+        navLink('overview', 'home', '개요', `#/s/${service.id}`),
+        SECTION_ORDER.map((key) => navLink(key, SECTIONS[key].icon, SECTIONS[key].label, `#/s/${service.id}/${key}`, content[key].length)),
       ] : null),
-    service ? h('a', { class: 'btn btn--primary btn--block sidebar__start', href: presentHref(service.id) }, '▶ 예배 화면 시작') : null,
+    service ? h('a', { class: 'btn btn--primary btn--block sidebar__start', href: presentHref(service.id) }, icon('play', 'icon btn__icon'), '예배 화면 시작') : null,
     store.isDemo() ? h('p', { class: 'demo-note' }, '데모 모드: 이 기기의 브라우저에만 저장됩니다.') : null);
 
   // The sidebar's demo note is hidden on phones, so the page repeats it inline there.
@@ -256,27 +257,38 @@ function renderOverview(service, content, services) {
 
   showHead();
 
-  const card = (key) => {
+  // Home-screen style widgets: square tiles with a caption underneath.
+  const tile = (key) => {
     const def = SECTIONS[key];
     const items = content[key];
-    return h('a', { class: 'card', href: `#/s/${service.id}/${key}` },
-      h('div', { class: 'card__head' },
-        h('span', { class: 'card__emoji', 'aria-hidden': 'true' }, def.emoji),
-        h('span', { class: 'card__label' }, def.label),
-        h('span', { class: 'card__count' }, `${items.length}개`)),
-      items.length
-        ? h('ul', { class: 'card__list' }, items.slice(0, 4).map((item) => h('li', {}, itemHeading(key, item))))
-        : h('p', { class: 'card__empty' }, canEdit ? '아직 없습니다 · 눌러서 추가하기' : '아직 없습니다'),
-      items.length > 4 ? h('p', { class: 'card__more' }, `외 ${items.length - 4}개`) : null);
+    return h('div', { class: 'widget' },
+      h('a', { class: 'tile', href: `#/s/${service.id}/${key}` },
+        items.length
+          ? h('ul', { class: 'tile__list' }, items.slice(0, 3).map((item) => h('li', {}, itemHeading(key, item))))
+          : h('p', { class: 'tile__empty' }, canEdit ? '눌러서 추가하기' : '아직 없습니다'),
+        h('span', { class: 'tile__foot' },
+          icon(def.icon, 'icon tile__icon'),
+          h('span', { class: 'tile__label' }, def.label))),
+      h('p', { class: 'widget__caption' }, `${items.length}개`));
   };
+
+  // Wide widget: the order of service, with a round start button.
+  const orderRow = (key) => h('li', {},
+    h('a', { class: 'order__row', href: `#/s/${service.id}/${key}` },
+      icon(SECTIONS[key].icon, 'icon order__icon'),
+      h('span', { class: 'order__label' }, SECTIONS[key].label),
+      h('span', { class: 'order__count' }, content[key].length)));
 
   return h('div', { class: 'page' },
     headSlot,
-    h('div', { class: 'start-panel' },
-      h('a', { class: 'btn btn--primary btn--large', href: presentHref(service.id) }, '▶ 예배 화면 시작'),
-      h('p', { class: 'muted' }, '찬양 → 성경 → 해설 → 광고 순서로 한 화면씩 크게 보여 줍니다.')),
-    h('h2', { class: 'section-heading' }, '예배 순서'),
-    h('div', { class: 'cards' }, SECTION_ORDER.map(card)));
+    h('div', { class: 'widgets' },
+      h('div', { class: 'widget widget--wide' },
+        h('div', { class: 'panel' },
+          h('p', { class: 'panel__eyebrow' }, '예배 순서'),
+          h('ul', { class: 'order' }, SECTION_ORDER.map(orderRow)),
+          h('a', { class: 'fab', href: presentHref(service.id), 'aria-label': '예배 화면 시작' }, icon('play', 'icon fab__icon'))),
+        h('p', { class: 'widget__caption' }, '예배 화면 시작')),
+      SECTION_ORDER.map(tile)));
 }
 
 /** Schedule page: a month calendar of every service, then upcoming and past lists. */
@@ -322,8 +334,8 @@ function renderServices(services) {
 
     body.replaceChildren(...[
       h('p', { class: 'muted' }, canEdit
-        ? '파란색 날짜를 누르면 그 예배로 이동하고, 빈 날짜를 누르면 그 날짜로 새 예배를 만듭니다.'
-        : '파란색 날짜를 누르면 그 예배로 이동합니다.'),
+        ? '점이 있는 날짜를 누르면 그 예배로 이동하고, 빈 날짜를 누르면 그 날짜로 새 예배를 만듭니다.'
+        : '점이 있는 날짜를 누르면 그 예배로 이동합니다.'),
       calendar,
       h('h2', { class: 'section-heading' }, `다가오는 예배 (${upcoming.length})`),
       upcoming.length
@@ -360,7 +372,7 @@ function renderServices(services) {
   return h('div', { class: 'page' },
     h('header', { class: 'page-head' },
       h('h1', { class: 'page-title' },
-        h('span', { class: 'page-title__emoji', 'aria-hidden': 'true' }, '📅'),
+        icon('calendar', 'icon page-title__icon'),
         '예배 일정'),
       canEdit ? h('div', { class: 'page-head__actions' },
         h('button', {

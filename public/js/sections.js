@@ -6,7 +6,7 @@ export const SECTIONS = {
   songs: {
     label: '찬양',
     noun: '찬양',
-    emoji: '🎵',
+    icon: 'music',
     empty: '아직 등록된 찬양이 없습니다.',
     bodyField: 'lyrics',
     fields: [
@@ -24,7 +24,7 @@ export const SECTIONS = {
   passages: {
     label: '성경',
     noun: '성경 본문',
-    emoji: '📖',
+    icon: 'book',
     empty: '아직 등록된 성경 본문이 없습니다.',
     bodyField: 'body',
     fields: [
@@ -42,7 +42,7 @@ export const SECTIONS = {
   commentaries: {
     label: '해설',
     noun: '해설',
-    emoji: '💬',
+    icon: 'message',
     empty: '아직 등록된 해설이 없습니다.',
     bodyField: 'body',
     fields: [
@@ -53,7 +53,7 @@ export const SECTIONS = {
   announcements: {
     label: '광고',
     noun: '광고',
-    emoji: '📢',
+    icon: 'megaphone',
     empty: '아직 등록된 광고가 없습니다.',
     bodyField: 'body',
     fields: [

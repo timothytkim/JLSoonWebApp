@@ -4,6 +4,8 @@
 
 A simple worship-service web app for small groups: praise lyrics, Bible passages, commentary and announcements, with a large-type presentation mode. Built with plain HTML, CSS and vanilla JavaScript, hosted on **Netlify**, with data in **Supabase**.
 
+> 🇰🇷 Supabase + Netlify 설치 방법(한국어): [SETUP.ko.md](SETUP.ko.md)
+
 ---
 
 ## 1. Pages & layout
@@ -122,7 +124,7 @@ cp .env.example .env        # fill in SUPABASE_URL and SUPABASE_ANON_KEY
 npm run dev                 # writes public/js/config.js, serves http://localhost:8000
 ```
 
-- **Demo mode:** if `.env` is missing or empty, the app runs with sample data stored only in that browser's `localStorage`. A yellow note says so. Use it to try the UI; it is not real persistence.
+- **Demo mode:** if `.env` is missing or empty, the app runs with sample data stored only in that browser's `localStorage`. A note says so. Use it to try the UI; it is not real persistence.
 - Open the app over `http://localhost`, not by double-clicking `index.html`. ES modules need an HTTP server.
 
 ## 6. Deploying to Netlify

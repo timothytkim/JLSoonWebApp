@@ -3,6 +3,7 @@ import { h, toast, errorMessage, setDirty, confirmDiscard } from './util.js';
 import { SECTIONS, itemHeading, itemMeta } from './sections.js';
 import { renderForm } from './form.js';
 import * as store from './store.js';
+import { icon } from './icons.js';
 
 export function renderSection({ service, content, sectionKey, reload, presentHref }) {
   const def = SECTIONS[sectionKey];
@@ -121,10 +122,10 @@ export function renderSection({ service, content, sectionKey, reload, presentHre
     h('header', { class: 'page-head' },
       h('a', { class: 'back-link', href: `#/s/${service.id}` }, '← ', service.title),
       h('h1', { class: 'page-title' },
-        h('span', { class: 'page-title__emoji', 'aria-hidden': 'true' }, def.emoji),
+        icon(def.icon, 'icon page-title__icon'),
         def.label),
       items.length || canEdit ? h('div', { class: 'page-head__actions' },
-        items.length ? h('a', { class: 'btn btn--primary', href: presentHref(service.id, items[0].id) }, `▶ ${def.label} 크게 보기`) : null,
+        items.length ? h('a', { class: 'btn btn--primary', href: presentHref(service.id, items[0].id) }, icon('play', 'icon btn__icon'), `${def.label} 크게 보기`) : null,
         canEdit ? h('button', { type: 'button', class: 'btn', onClick: () => openEditor(addSlot, restoreAdd) }, `+ ${def.noun} 추가`) : null) : null),
     items.length
       ? h('div', { class: 'blocks' }, items.map(block))
